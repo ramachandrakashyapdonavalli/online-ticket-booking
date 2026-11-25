@@ -1,4 +1,4 @@
-name: Deploy Evently to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -17,6 +17,10 @@ concurrency:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -26,13 +30,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build project
         run: npm run build
 
       - name: Upload build
@@ -41,4 +45,5 @@ jobs:
           path: dist
 
       - name: Deploy
+        id: deployment
         uses: actions/deploy-pages@v4
