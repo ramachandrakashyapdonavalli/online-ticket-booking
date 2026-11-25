@@ -36,7 +36,7 @@ function App() {
     <EventsProvider>
       <BookingsProvider>
         <UsersProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/online-ticket-booking">
             <Navbar />
 
             <Routes>
